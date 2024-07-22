@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game
 {
@@ -7,5 +8,10 @@ namespace Game
         public CommandManager CommandManager;
         public CharacterController Character;
         public AudioSource MusicPlayer;
+        public PlayerInput PlayerInput;
+        public AssetProvider AssetProvider;
+        public UIPanelStateController UIPanelStateController;
+        public Battle Battle;
+        public MonoBehaviour CoroutineRunner;
     }
 }

@@ -24,8 +24,15 @@ namespace Game
             
             _mover = new Mover(Model, _rigidbody2D, 3f);
 
-            _input = GetComponent<PlayerInput>();
+            _input = GameData.GetInstance().PlayerInput;
             _moveAction = _input.actions["Move"];
+        }
+
+        private void OnDisable()
+        {
+            GameData.GetInstance().Character.GetComponent<BoxCollider2D>().enabled = false;
+            Model.Speed = 0;
+            _rigidbody2D.velocity = Vector2.zero;
         }
 
         public void Used()

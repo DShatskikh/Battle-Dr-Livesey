@@ -1,55 +1,74 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Game
 {
-    public class TypingText
+    public class MessageBox : MonoBehaviour
     {
+        [SerializeField]
         private TMP_Text _label;
+        
         private Coroutine _coroutine;
         private string _finallyText;
         private InputAction _cancelAction;
+        private InputAction _submitAction;
 
-        public TypingText(TMP_Text label)
+        public UnityAction OnClose;
+
+        public void Awake()
         {
-            _label = label;
             _cancelAction = GameData.GetInstance().PlayerInput.actions["Cancel"];
+            _submitAction = GameData.GetInstance().PlayerInput.actions["Submit"];
         }
 
-        public void StartTyping(string text)
+        public void StartTyping(string text, UnityAction onClose)
         {
+            gameObject.SetActive(true);
+            OnClose = onClose;
             _label.gameObject.SetActive(true);
             _finallyText = text;
+
             _cancelAction.started += CancelActionOnStarted;
+            _submitAction.started += SubmitActionOnStarted;
             
             if (_coroutine != null)
-                GameData.GetInstance().CoroutineRunner.StopCoroutine(_coroutine);
+                StopCoroutine(_coroutine);
             
-            _coroutine = GameData.GetInstance().CoroutineRunner.StartCoroutine(TypingProcess());
+            _coroutine = StartCoroutine(TypingProcess());
         }
 
         public void StopTyping()
         {
             _cancelAction.started -= CancelActionOnStarted;
+            _cancelAction.started -= SubmitActionOnStarted;
             
             if (_coroutine != null)
-                GameData.GetInstance().CoroutineRunner.StopCoroutine(_coroutine);
+                StopCoroutine(_coroutine);
             
             _label.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            OnClose.Invoke();
         }
 
         public void SkipTyping()
         {
             if (_coroutine != null)
-                GameData.GetInstance().CoroutineRunner.StopCoroutine(_coroutine);
+                StopCoroutine(_coroutine);
             
             _label.text = _finallyText;
         }
-
+        
         private void CancelActionOnStarted(InputAction.CallbackContext obj) => 
             SkipTyping();
+
+        private void SubmitActionOnStarted(InputAction.CallbackContext obj)
+        {
+            if (_label.text == _finallyText)
+                StopTyping();
+        }
 
         private IEnumerator TypingProcess()
         {

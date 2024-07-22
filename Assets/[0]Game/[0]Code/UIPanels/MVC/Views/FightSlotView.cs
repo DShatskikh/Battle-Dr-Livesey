@@ -14,7 +14,7 @@ namespace Game
 
         public void UpdateView(FightSlotModel model)
         {
-            _label.text = model.Enemy.name;
+            _label.text = model.Enemy.Name;
 
             if (model.IsSelected)
             {

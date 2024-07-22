@@ -14,18 +14,19 @@ namespace Game
                 var model = new FightSlotModel(battle.Enemy);
                 var slot = Instantiate(assetProvider.FightSlotPrefab, transform);
                 slot.Model = model;
-                int rowIndex = 1- i - 0;
+                int rowIndex = i;
                 int columnIndex = 0;
                 _slots.Add(new Vector2(columnIndex, rowIndex), slot);
             }
             
-            _currentIndex = new Vector2(0, 1 - 1);
+            _currentIndex = new Vector2(0, 0);
             _slots[_currentIndex].SetSelected(true);
         }
         
         public override void OnSubmit()
         {
             print("Удар");
+            ((FightSlotController)_currentSlot).Model.Enemy.TakeDamage(10);
         }
 
         public override void OnCancel()

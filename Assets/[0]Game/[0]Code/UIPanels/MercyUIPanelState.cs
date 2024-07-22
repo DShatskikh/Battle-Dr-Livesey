@@ -29,10 +29,12 @@ namespace Game
             {
                 case MercyOptionType.Mercy:
                     print("Mercy");
-                    //_panelStateController.SetPanelState<FightUIPanelState>();
+                    _panelStateController.ResetCurrentPanelState();
+                    GameData.GetInstance().Battle.Enemy.Mercy(MercyOptionType.Mercy);
                     break;
                 case MercyOptionType.Run:
                     print("Run");
+                    GameData.GetInstance().Battle.Enemy.Mercy(MercyOptionType.Run);
                     //_panelStateController.SetPanelState<UIPanelStateBag>();
                     break;
             }

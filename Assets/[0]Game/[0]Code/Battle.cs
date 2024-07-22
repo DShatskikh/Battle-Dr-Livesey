@@ -12,6 +12,7 @@ namespace Game
         public Transform CharacterPoint;
         public Transform EnemyPoint;
         public TypingText TextMessage;
+        public MessageBox MenuMessageBox;
         public GameObject Canvas;
         public HeartType HeartType = HeartType.Red;
         public Enemy Enemy;

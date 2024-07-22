@@ -3,11 +3,11 @@
     public class ActSlotModel
     {
         public bool IsSelected;
-        public string Name;
+        public Act Act;
         
-        public ActSlotModel(string name)
+        public ActSlotModel(Act act)
         {
-            Name = name;
+            Act = act;
         }
     }
 }

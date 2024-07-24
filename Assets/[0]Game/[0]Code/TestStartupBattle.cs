@@ -8,14 +8,19 @@ namespace Game
     public class TestStartupBattle : MonoBehaviour
     {
         [SerializeField] 
-        private Enemy _enemy;
-        
+        private Enemy[] _enemies;
+
+        [SerializeField]
+        private List<Item> _items;
+
         private IEnumerator Start()
         {
             yield return null;
-            var introBattleCommand = new NotIntroBattleCommand(_enemy);
-            var startBattleCommand = new StartBattleCommand(_enemy);
+            var introBattleCommand = new NotIntroBattleCommand(_enemies);
+            var startBattleCommand = new StartBattleCommand(_enemies);
             GameData.GetInstance().CommandManager.StartCommands(new List<Command>() {introBattleCommand, startBattleCommand});
+
+            GameData.GetInstance().Character.Model.Items = _items;
         }
     }
 }

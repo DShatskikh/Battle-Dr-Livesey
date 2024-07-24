@@ -2,37 +2,38 @@
 
 namespace Game
 {
-    public class ActUIPanelState : UIPanelState
+    public class ActSelectUIPanelState : UIPanelState
     {
         private void Start()
         {
             var assetProvider = GameData.GetInstance().AssetProvider;
-            var acts = GameData.GetInstance().Battle.SelectedEnemy.GetActs();
+            var battle = GameData.GetInstance().Battle;
+            var enemies = battle.Enemies;
 
-            for (int i = 0; i < acts.Length; i++)
+            for (int i = 0; i < enemies.Length; i++)
             {
-                var model = new ActSlotModel(acts[i]);
-                var slot = Instantiate(assetProvider.ActSlotPrefab, transform);
+                var model = new FightSlotModel(enemies[i]);
+                var slot = Instantiate(assetProvider.FightSlotPrefab, transform);
                 slot.Model = model;
-                int rowIndex = (acts.Length - i - 1) / 2;
-                int columnIndex = i % 2;
+                int rowIndex = enemies.Length - i - 1;
+                int columnIndex = 0;
                 _slots.Add(new Vector2(columnIndex, rowIndex), slot);
             }
             
-            _currentIndex = new Vector2(0, (acts.Length - 1) / 2);
+            _currentIndex = new Vector2(0, enemies.Length - 1);
             _slots[_currentIndex].SetSelected(true);
         }
         
         public override void OnSubmit()
         {
-            print("Действие");
-            _panelStateController.ResetCurrentPanelState();
-            GameData.GetInstance().Battle.SelectedEnemy.Act(((ActSlotController)_currentSlot).Model.Act);
+            print("Окно действий");
+            GameData.GetInstance().Battle.SelectedEnemy = ((FightSlotController)_currentSlot).Model.Enemy;
+            _panelStateController.SetPanelState<ActUIPanelState>();
         }
 
         public override void OnCancel()
         {
-            _panelStateController.SetPanelState<ActSelectUIPanelState>();
+            _panelStateController.SetPanelState<MainUIPanelState>();
         }
 
         public override void OnSlotIndexChanged(Vector2 direction)

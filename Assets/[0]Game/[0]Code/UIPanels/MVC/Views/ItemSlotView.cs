@@ -14,7 +14,7 @@ namespace Game
 
         public void UpdateView(ItemSlotModel model)
         {
-            _label.text = model.Name;
+            _label.text = model.Item.Name;
 
             if (model.IsSelected)
             {

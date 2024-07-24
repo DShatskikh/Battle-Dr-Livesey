@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -10,12 +12,13 @@ namespace Game
         private TMP_Text _label;
         
         public Transform CharacterPoint;
-        public Transform EnemyPoint;
+        public Transform[] EnemyPoints;
         public TypingText TextMessage;
         public MessageBox MenuMessageBox;
         public GameObject Canvas;
         public HeartType HeartType = HeartType.Red;
-        public Enemy Enemy;
+        public Enemy[] Enemies;
+        public Enemy SelectedEnemy;
 
         private void Awake()
         {
@@ -31,6 +34,16 @@ namespace Game
             }
 
             throw new Exception("Нет обьекта в списке");
+        }
+
+        public void Turn(List<Command> commands = null)
+        {
+            commands ??= new List<Command>();
+            
+            commands.Add(new BattleEnemyMessageCommand("Ахахаха"));
+            commands.Add(new EnemyTurnCommand());
+            commands.Add(new StartCharacterTurn());
+            GameData.GetInstance().CommandManager.StartCommands(commands);
         }
     }
 }

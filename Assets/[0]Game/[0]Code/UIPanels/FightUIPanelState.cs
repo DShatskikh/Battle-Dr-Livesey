@@ -1,53 +1,83 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 namespace Game
 {
     public class FightUIPanelState : UIPanelState
     {
-        private void Start()
-        {
-            var assetProvider = GameData.GetInstance().AssetProvider;
-            var battle = GameData.GetInstance().Battle;
+        private const float Speed = 1;
 
-            for (int i = 0; i < 1; i++)
-            {
-                var model = new FightSlotModel(battle.Enemy);
-                var slot = Instantiate(assetProvider.FightSlotPrefab, transform);
-                slot.Model = model;
-                int rowIndex = i;
-                int columnIndex = 0;
-                _slots.Add(new Vector2(columnIndex, rowIndex), slot);
-            }
-            
-            _currentIndex = new Vector2(0, 0);
-            _slots[_currentIndex].SetSelected(true);
+        [SerializeField]
+        private Transform _startPoint, _finishPoint;
+
+        [SerializeField]
+        private Transform _slash;
+
+        private float _progress = 0;
+        private Coroutine _moveCoroutine;
+        private Coroutine _finishCoroutine;
+
+        private void OnEnable()
+        {
+            _moveCoroutine = StartCoroutine(AwaitMove());
         }
-        
+
         public override void OnSubmit()
         {
-            print("Удар");
-            ((FightSlotController)_currentSlot).Model.Enemy.TakeDamage(10);
+            if (_moveCoroutine != null)
+            {
+                StopCoroutine(_moveCoroutine);
+                _finishCoroutine = StartCoroutine(AwaitFinish());
+            }
         }
 
         public override void OnCancel()
         {
-            _panelStateController.SetPanelState<MainUIPanelState>();
+            
         }
 
         public override void OnSlotIndexChanged(Vector2 direction)
         {
-            var newIndex = _currentIndex + direction;
             
-            if (_slots.TryGetValue(newIndex, out var model))
+        }
+
+        private IEnumerator AwaitMove()
+        {
+            _progress = 0;
+            var speed = 0f;
+            
+            while (_progress < 1)
             {
-                if (model != null)
-                {
-                    model.SetSelected(true);
-                    var oldVM = _slots[_currentIndex];
-                    oldVM.SetSelected(false);
-                    _currentIndex = newIndex;
-                }
+                var startPosition = _slash.transform.position;
+                _slash.transform.position = 
+                    Vector2.Lerp(_startPoint.position, _finishPoint.position, _progress);
+
+                speed = Vector2.Distance(_slash.transform.position, startPosition) / Time.deltaTime;
+                yield return null;
+                _progress += Time.deltaTime * Speed;
             }
+
+            _progress = 0;
+            
+            var timeMove = 0f;
+            
+            while (timeMove < 0.8f)
+            {
+                _slash.transform.position += (Vector3)Vector2.left * speed * Time.deltaTime;
+                yield return null;
+                timeMove += Time.deltaTime;
+            }
+            
+            _finishCoroutine = StartCoroutine(AwaitFinish());
+        }
+
+        private IEnumerator AwaitFinish()
+        {
+            GameData.GetInstance().Battle.SelectedEnemy.TakeDamage((int)(Mathf.Ceil(_progress * 10)));
+            yield return new WaitForSeconds(2);
+            GameData.GetInstance().UIPanelStateController.ResetCurrentPanelState();
+            GameData.GetInstance().Battle.Turn();
         }
     }
 }

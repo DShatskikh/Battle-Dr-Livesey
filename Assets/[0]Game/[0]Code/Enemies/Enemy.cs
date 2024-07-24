@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Game
@@ -11,8 +12,8 @@ namespace Game
         public int Damage;
         public int Protection;
         public string Name;
-        public MessageBox MessageBox;
-        public abstract void Turn(List<Command> commands = null);
+        public MessageBoxNoController MessageBox;
+
         public abstract void TakeDamage(int damage);
         public abstract void Act(Act act);
         public abstract void Mercy(MercyOptionType optionType);

@@ -6,14 +6,6 @@ namespace Game
 {
     public class Livesey : Enemy
     {
-        public override void Turn(List<Command> commands = null)
-        {
-            commands.Add(new BattleEnemyMessageCommand("Ахахаха"));
-            commands.Add(new EnemyTurnCommand());
-            commands.Add(new StartCharacterTurn());
-            GameData.GetInstance().CommandManager.StartCommands(commands);
-        }
-
         public override void TakeDamage(int damage)
         {
             Health =- damage;
@@ -34,7 +26,7 @@ namespace Game
                 case MercyOptionType.Mercy:
                     Debug.Log("Ливси пощада");
                     commands.Add(new BattleMessageCommand("Вы щадите ливси"));
-                    Turn(commands);
+                    GameData.GetInstance().Battle.Turn(commands);
                     break;
                 case MercyOptionType.Run:
                     Debug.Log("Ливси Побег");
@@ -72,7 +64,7 @@ namespace Game
                 var commands = new List<Command>();
                 
                 commands.Add(new BattleMessageCommand("Вы рассказали шутку"));
-                enemy.Turn(commands);
+                GameData.GetInstance().Battle.Turn(commands);
             }
         }
     }

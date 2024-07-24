@@ -3,11 +3,11 @@
     public class ItemSlotModel
     {
         public bool IsSelected;
-        public string Name;
+        public Item Item;
         
-        public ItemSlotModel(string name)
+        public ItemSlotModel(Item item)
         {
-            Name = name;
+            Item = item;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -10,6 +11,9 @@ namespace Game
         public float Speed { get; set; }
         public Vector2 Direction { get; set; }
         public bool IsMove => Speed > 0;
+        public WeaponItem WeaponItem;
+        public ArmorItem ArmorItem;
+        public List<Item> Items = new List<Item>();
 
         public event Action<float> OnHealthChanged;
         public event Action<float> OnSpeedChanged;

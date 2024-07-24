@@ -30,11 +30,11 @@ namespace Game
                 case MercyOptionType.Mercy:
                     print("Mercy");
                     _panelStateController.ResetCurrentPanelState();
-                    GameData.GetInstance().Battle.Enemy.Mercy(MercyOptionType.Mercy);
+                    GameData.GetInstance().Battle.SelectedEnemy.Mercy(MercyOptionType.Mercy);
                     break;
                 case MercyOptionType.Run:
                     print("Run");
-                    GameData.GetInstance().Battle.Enemy.Mercy(MercyOptionType.Run);
+                    GameData.GetInstance().Battle.SelectedEnemy.Mercy(MercyOptionType.Run);
                     //_panelStateController.SetPanelState<UIPanelStateBag>();
                     break;
             }
@@ -42,7 +42,7 @@ namespace Game
 
         public override void OnCancel()
         {
-            _panelStateController.SetPanelState<MainUIPanelState>();
+            _panelStateController.SetPanelState<MercySelectUIPanelState>();
         }
 
         public override void OnSlotIndexChanged(Vector2 direction)

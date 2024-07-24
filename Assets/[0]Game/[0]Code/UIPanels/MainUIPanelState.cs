@@ -45,11 +45,11 @@ namespace Game
             {
                 case MenuOptionType.Fight:
                     print("Fight");
-                    _panelStateController.SetPanelState<FightUIPanelState>();
+                    _panelStateController.SetPanelState<FightSelectUIPanelState>();
                     break;
                 case MenuOptionType.Act:
                     print("Act");
-                    _panelStateController.SetPanelState<ActUIPanelState>();
+                    _panelStateController.SetPanelState<ActSelectUIPanelState>();
                     break;
                 case MenuOptionType.Item:
                     print("Item");
@@ -57,7 +57,7 @@ namespace Game
                     break;
                 case MenuOptionType.Mercy:
                     print("Mercy");
-                    _panelStateController.SetPanelState<MercyUIPanelState>();
+                    _panelStateController.SetPanelState<MercySelectUIPanelState>();
                     break;
             }
         }

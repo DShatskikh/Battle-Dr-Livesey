@@ -15,7 +15,7 @@ namespace Game
             var commands = new List<Command>();
                 
             commands.Add(new BattleMessageCommand($"{enemy.GetInfo()}"));
-            enemy.Turn(commands);
+            GameData.GetInstance().Battle.Turn(commands);
         }
     }
 }

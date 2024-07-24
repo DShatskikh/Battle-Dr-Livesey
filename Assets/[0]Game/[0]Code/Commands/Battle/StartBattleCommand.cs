@@ -5,18 +5,18 @@ namespace Game
 {
     public class StartBattleCommand : Command
     {
-        private readonly Enemy _enemy;
+        private readonly Enemy[] _enemies;
 
-        public StartBattleCommand(Enemy enemy)
+        public StartBattleCommand(Enemy[] enemies)
         {
-            _enemy = enemy;
+            _enemies = enemies;
         }
 
         public override void Execute(UnityAction onCompleted)
         {
             GameData.GetInstance().Battle.Canvas.SetActive(true);
             GameData.GetInstance().UIPanelStateController.SetPanelState<MainUIPanelState>();
-            GameData.GetInstance().Battle.Enemy = _enemy;
+            GameData.GetInstance().Battle.Enemies = _enemies;
             onCompleted?.Invoke();
         }
     }

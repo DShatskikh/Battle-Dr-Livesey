@@ -14,5 +14,6 @@ namespace Game
         }
         
         public bool IsSelected { get; set; }
+        public bool IsNotActive { get; set; }
     }
 }

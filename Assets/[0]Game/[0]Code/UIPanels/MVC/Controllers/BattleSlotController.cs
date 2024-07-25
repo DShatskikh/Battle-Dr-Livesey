@@ -13,6 +13,9 @@
 
         private void Start()
         {
+            if (Model.Config.MenuOptionType == MenuOptionType.Item && GameData.GetInstance().Character.Model.Items.Count == 0)
+                Model.IsNotActive = true;
+            
             UpdateView();
         }
 

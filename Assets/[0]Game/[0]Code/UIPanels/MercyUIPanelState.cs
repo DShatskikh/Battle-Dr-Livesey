@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game
 {
     public class MercyUIPanelState : UIPanelState
     {
-        private void Start()
+        private void OnEnable()
         {
             var assetProvider = GameData.GetInstance().AssetProvider;
             var data = assetProvider.MercySlotConfigs;
@@ -23,6 +24,14 @@ namespace Game
             _slots[_currentIndex].SetSelected(true);
         }
         
+        private void OnDisable()
+        {
+            foreach (var slot in _slots) 
+                Destroy(slot.Value.gameObject);
+
+            _slots = new Dictionary<Vector2, BaseSlotController>();
+        }
+        
         public override void OnSubmit()
         {
             switch (((MercySlotController)_currentSlot).Model.Config.OptionType)
@@ -34,26 +43,29 @@ namespace Game
                     break;
                 case MercyOptionType.Run:
                     print("Run");
+                    _panelStateController.ResetCurrentPanelState();
                     GameData.GetInstance().Battle.SelectedEnemy.Mercy(MercyOptionType.Run);
-                    //_panelStateController.SetPanelState<UIPanelStateBag>();
                     break;
             }
         }
 
         public override void OnCancel()
         {
-            _panelStateController.SetPanelState<MercySelectUIPanelState>();
+            if (GameData.GetInstance().Battle.Enemies.Length != 1)
+                _panelStateController.SetPanelState<MercySelectUIPanelState>();
+            else
+                _panelStateController.SetPanelState<MainUIPanelState>();
         }
 
         public override void OnSlotIndexChanged(Vector2 direction)
         {
             var newIndex = _currentIndex + direction;
             
-            if (_slots.TryGetValue(newIndex, out var model))
+            if (_slots.TryGetValue(newIndex, out var controller))
             {
-                if (model != null)
+                if (controller != null)
                 {
-                    model.SetSelected(true);
+                    controller.SetSelected(true);
                     var oldVM = _slots[_currentIndex];
                     oldVM.SetSelected(false);
                     _currentIndex = newIndex;

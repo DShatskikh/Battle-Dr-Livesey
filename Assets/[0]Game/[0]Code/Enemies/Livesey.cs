@@ -10,6 +10,9 @@ namespace Game
         {
             Health =- damage;
             print("Ливси получил " + damage + " урона");
+
+            if (Health <= 0) 
+                Dead();
         }
 
         public override void Act(Act act)
@@ -26,10 +29,16 @@ namespace Game
                 case MercyOptionType.Mercy:
                     Debug.Log("Ливси пощада");
                     commands.Add(new BattleMessageCommand("Вы щадите ливси"));
+                    
+                    if (MercyProgress >= 100)
+                        IsMercy = true;
+                    
                     GameData.GetInstance().Battle.Turn(commands);
+                    MercyProgress += 100;
                     break;
                 case MercyOptionType.Run:
                     Debug.Log("Ливси Побег");
+                    GameData.GetInstance().Battle.Run(commands);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(optionType), optionType, null);
@@ -50,6 +59,22 @@ namespace Game
                 new JokeAct(),
                 new JokeAct()
             };
+        }
+
+        public override bool TryComment()
+        {
+            if (GameData.GetInstance().Battle.IsAllyDiedTurn)
+                MessageBox.StartTyping(": (");
+            else
+                MessageBox.StartTyping("Ахахаха");
+            return true;
+        }
+
+        public override void Dead()
+        {
+            GameData.GetInstance().Battle.IsAllyDiedTurn = true;
+            GameData.GetInstance().Battle.AliveEnemies.Remove(this);
+            gameObject.SetActive(false);
         }
 
         public class JokeAct : Act

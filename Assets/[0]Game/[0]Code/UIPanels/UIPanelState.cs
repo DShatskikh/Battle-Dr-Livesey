@@ -15,8 +15,16 @@ namespace Game
         protected Dictionary<Vector2, BaseSlotController> _slots = new Dictionary<Vector2, BaseSlotController>();
         protected Vector2 _currentIndex;
         protected UIPanelStateController _panelStateController;
-        protected BaseSlotController _currentSlot => _slots[_currentIndex];
-        
+
+        protected BaseSlotController _currentSlot
+        {
+            get
+            {
+                _slots.TryGetValue(_currentIndex, out var controller);
+                return controller ? controller : _slots[Vector2.zero];
+            }
+        }
+
         private void Awake()
         {
             _input = GameData.GetInstance().PlayerInput;

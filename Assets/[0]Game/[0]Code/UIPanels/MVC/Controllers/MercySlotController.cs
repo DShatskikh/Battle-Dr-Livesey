@@ -13,6 +13,9 @@
 
         private void Start()
         {
+            if (Model.Config.OptionType == MercyOptionType.Mercy && GameData.GetInstance().Battle.SelectedEnemy.IsCanMercy)
+                Model.IsMercy = true;
+            
             UpdateView();
         }
 

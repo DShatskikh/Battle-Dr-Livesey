@@ -15,19 +15,19 @@ namespace Game
         public ArmorItem ArmorItem;
         public List<Item> Items = new List<Item>();
 
-        public event Action<float> OnHealthChanged;
-        public event Action<float> OnSpeedChanged;
+        public event Action<float> HealthChanged;
+        public event Action<float> SpeedChanged;
 
         public void TakeDamage(float amount)
         {
             Health -= amount;
-            OnHealthChanged?.Invoke(Health);
+            HealthChanged?.Invoke(Health);
         }
 
         public void UpgradeSpeed(float speed)
         {
             Speed = speed;
-            OnSpeedChanged?.Invoke(speed);
+            SpeedChanged?.Invoke(speed);
         }
     }
 }

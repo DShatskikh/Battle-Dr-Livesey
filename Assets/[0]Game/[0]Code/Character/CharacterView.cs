@@ -7,20 +7,20 @@ namespace Game
     {
         [SerializeField]
         private Animator _animator;
-
-        [SerializeField]
-        private CharacterController _controller;
-
+        
         private CharacterModel _model;
         
         private void Awake()
         {
-            _model = _controller.Model;
-            
-            _model.OnSpeedChanged += UpgradeSpeed;
+            _model.SpeedChanged += OnSpeedChanged;
         }
 
-        private void UpgradeSpeed(float speed)
+        public void SetModel(CharacterModel model)
+        {
+            _model = model;
+        }
+        
+        private void OnSpeedChanged(float speed)
         {
             
         }

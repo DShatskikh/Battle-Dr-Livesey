@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ namespace Game
             base.Activate(isActive);
         }
 
-        private void Start()
+        private void OnEnable()
         {
             var assetProvider = GameData.GetInstance().AssetProvider;
             var data = assetProvider.BattleButtonConfigs;
@@ -36,47 +37,73 @@ namespace Game
             
             _slots[_currentIndex].SetSelected(true);
         }
-        
+
+        private void OnDisable()
+        {
+            foreach (var slot in _slots) 
+                Destroy(slot.Value.gameObject);
+
+            _slots = new Dictionary<Vector2, BaseSlotController>();
+        }
+
         public override void OnSubmit()
         {
-            print("OnSubmit");
-            
             switch (((BattleSlotController)_currentSlot).Model.Config.MenuOptionType)
             {
                 case MenuOptionType.Fight:
-                    print("Fight");
                     _panelStateController.SetPanelState<FightSelectUIPanelState>();
                     break;
                 case MenuOptionType.Act:
-                    print("Act");
-                    _panelStateController.SetPanelState<ActSelectUIPanelState>();
+                    if (GameData.GetInstance().Battle.Enemies.Length != 1)
+                    {
+                        _panelStateController.SetPanelState<ActSelectUIPanelState>();   
+                    }
+                    else
+                    {
+                        GameData.GetInstance().Battle.SelectedEnemy = GameData.GetInstance().Battle.Enemies[0];
+                        _panelStateController.SetPanelState<ActUIPanelState>();
+                    }
                     break;
                 case MenuOptionType.Item:
-                    print("Item");
                     _panelStateController.SetPanelState<ItemsUIPanelState>();
                     break;
                 case MenuOptionType.Mercy:
-                    print("Mercy");
-                    _panelStateController.SetPanelState<MercySelectUIPanelState>();
+                    if (GameData.GetInstance().Battle.Enemies.Length != 1)
+                    {
+                        _panelStateController.SetPanelState<MercySelectUIPanelState>();   
+                    }
+                    else
+                    {
+                        GameData.GetInstance().Battle.SelectedEnemy = GameData.GetInstance().Battle.Enemies[0];
+                        _panelStateController.SetPanelState<MercyUIPanelState>();
+                    }
                     break;
             }
         }
 
-        public override void OnCancel()
-        {
-            print("OnCancel");
-
-        }
+        public override void OnCancel() { }
 
         public override void OnSlotIndexChanged(Vector2 direction)
         {
             var newIndex = _currentIndex + direction;
             
-            if (_slots.TryGetValue(newIndex, out var model))
+            if (_slots.TryGetValue(newIndex, out var controller) && controller != null)
             {
-                if (model != null)
+                if (((BattleSlotController)controller).Model.IsNotActive)
                 {
-                    model.SetSelected(true);
+                    newIndex = _currentIndex + direction * 2;
+
+                    if (_slots.TryGetValue(newIndex, out var controller1) && controller1 != null)
+                    {
+                        controller1.SetSelected(true);
+                        var oldVM = _slots[_currentIndex];
+                        oldVM.SetSelected(false);
+                        _currentIndex = newIndex;
+                    }
+                }
+                else
+                {
+                    controller.SetSelected(true);
                     var oldVM = _slots[_currentIndex];
                     oldVM.SetSelected(false);
                     _currentIndex = newIndex;

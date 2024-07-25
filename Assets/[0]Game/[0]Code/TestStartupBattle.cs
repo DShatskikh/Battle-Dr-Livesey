@@ -16,7 +16,7 @@ namespace Game
         private IEnumerator Start()
         {
             yield return null;
-            var introBattleCommand = new NotIntroBattleCommand(_enemies);
+            var introBattleCommand = new StartBattleNotIntroCommand(_enemies);
             var startBattleCommand = new StartBattleCommand(_enemies);
             GameData.GetInstance().CommandManager.StartCommands(new List<Command>() {introBattleCommand, startBattleCommand});
 

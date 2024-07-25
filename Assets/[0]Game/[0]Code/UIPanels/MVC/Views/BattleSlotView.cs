@@ -40,6 +40,13 @@ namespace Game
                 _icon.color = new Color(1, 0.5f, 0);
                 _icon.sprite = model.Config.Icon;
             }
+            
+            if (model.IsNotActive)
+            {
+                _label.color = Color.grey;
+                _frame.color = Color.grey;
+                _icon.color = Color.grey;
+            }
         }
     }
 }

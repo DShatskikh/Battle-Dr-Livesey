@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Game
 {
-    public class CharacterController : MonoBehaviour, IController
+    public class CharacterController : MonoBehaviour
     {
         public CharacterModel Model;
         public CharacterView View;
@@ -20,6 +20,8 @@ namespace Game
             Model.Health = Model.MaxHealth = 100f;
             Model.Speed = 5f;
 
+            View.SetModel(Model);
+            
             _rigidbody2D = GetComponent<Rigidbody2D>();
             
             _mover = new Mover(Model, _rigidbody2D, 3f);
@@ -33,16 +35,6 @@ namespace Game
             GameData.GetInstance().Character.GetComponent<BoxCollider2D>().enabled = false;
             Model.Speed = 0;
             _rigidbody2D.velocity = Vector2.zero;
-        }
-
-        public void Used()
-        {
-            
-        }
-
-        public void NotUsed()
-        {
-            
         }
 
         private void Update()

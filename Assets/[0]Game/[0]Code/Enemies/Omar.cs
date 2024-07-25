@@ -28,5 +28,15 @@ namespace Game
         {
             throw new System.NotImplementedException();
         }
+
+        public override bool TryComment()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Dead()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

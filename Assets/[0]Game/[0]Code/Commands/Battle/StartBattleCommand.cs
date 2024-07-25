@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿using System.Linq;
 using UnityEngine.Events;
 
 namespace Game
@@ -17,6 +17,7 @@ namespace Game
             GameData.GetInstance().Battle.Canvas.SetActive(true);
             GameData.GetInstance().UIPanelStateController.SetPanelState<MainUIPanelState>();
             GameData.GetInstance().Battle.Enemies = _enemies;
+            GameData.GetInstance().Battle.AliveEnemies = _enemies.ToList();
             onCompleted?.Invoke();
         }
     }

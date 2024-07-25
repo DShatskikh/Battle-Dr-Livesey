@@ -3,14 +3,13 @@ using UnityEngine.InputSystem;
 
 namespace Game
 {
-    public class BattleEnemyMessageCommand : Command
+    public class BattleAllEnemyMessageCommand : Command
     {
-        private readonly string _text;
         private UnityAction _onCompleted;
         
-        public BattleEnemyMessageCommand(string text)
+        public BattleAllEnemyMessageCommand()
         {
-            _text = text;
+            
         }
         
         public override void Execute(UnityAction onCompleted)
@@ -18,15 +17,15 @@ namespace Game
             _onCompleted = onCompleted;
             GameData.GetInstance().PlayerInput.actions["Submit"].performed += Onperformed;
 
-            foreach (var enemy in GameData.GetInstance().Battle.Enemies) 
-                enemy.MessageBox.StartTyping(_text);
+            foreach (var enemy in GameData.GetInstance().Battle.AliveEnemies) 
+                enemy.TryComment();
         }
 
         private void Onperformed(InputAction.CallbackContext obj)
         {
             GameData.GetInstance().PlayerInput.actions["Submit"].performed -= Onperformed;
             
-            foreach (var enemy in GameData.GetInstance().Battle.Enemies) 
+            foreach (var enemy in GameData.GetInstance().Battle.AliveEnemies) 
                 enemy.MessageBox.StopTyping();
 
             _onCompleted.Invoke();

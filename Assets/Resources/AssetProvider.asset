@@ -20,6 +20,14 @@ MonoBehaviour:
   MercySlotConfigs:
   - {fileID: 11400000, guid: b05d2e4528f1a0849a50ef146dfe99f8, type: 2}
   - {fileID: 11400000, guid: 97b41d041e9bf21449d8745537630853, type: 2}
+  GameOverButtonConfigs:
+  - {fileID: 11400000, guid: 62ab93805bc07f74bb0641b028baf7ff, type: 2}
+  - {fileID: 11400000, guid: 1968a934523b5ff468520d543c1888f1, type: 2}
+  ShopSlotConfigs:
+  - {fileID: 11400000, guid: 9bf4df40229945d4ba1a715cdc08893f, type: 2}
+  - {fileID: 11400000, guid: 19640a6e9efac6f429df05af4ed5a809, type: 2}
+  - {fileID: 11400000, guid: 7354d5bf930b6da4dbd416eb067aab6f, type: 2}
+  - {fileID: 11400000, guid: 3937196db1217644d80c403fc3f56d3a, type: 2}
   PairHeartSprites:
   - HeartType: 0
     Sprite: {fileID: 3867594838521495272, guid: 4dc5854afb1b55046b100564a52bb49d, type: 3}
@@ -31,3 +39,8 @@ MonoBehaviour:
   ActSlotPrefab: {fileID: -8091767860108810381, guid: 02f9a25ae4dec914bb403776342e719e, type: 3}
   ItemSlotPrefab: {fileID: 217606006946078318, guid: e91f6e8628d05814c89a8d91a37ee7ca, type: 3}
   MercySlotPrefab: {fileID: 2401391736279001774, guid: 1c55d4d74e6a4554d8fdc93739ff4ece, type: 3}
+  GameOverSlotPrefab: {fileID: 6439441742588638916, guid: a1ac192bd56ea154fa53a4f160210800, type: 3}
+  ShopSlotPrefab: {fileID: 2479361868706518604, guid: 47396630b113d5347ad07b89fedc3369, type: 3}
+  BuyShopSlotPrefab: {fileID: 5523924120612293501, guid: b5ad48f19b6b3c44396813dd6a30bdb4, type: 3}
+  SellShopSlotPrefab: {fileID: 9220765232330560880, guid: 9a154bad3f8926f449f1d7f4e8e43a96, type: 3}
+  SelectTalkShopSlotPrefab: {fileID: 6293566655891586149, guid: 00c636451c3af2d448f6cf03a316d790, type: 3}

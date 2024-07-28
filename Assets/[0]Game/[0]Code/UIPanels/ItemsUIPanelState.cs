@@ -42,10 +42,9 @@ namespace Game
         public override void OnSubmit()
         {
             print("Предмет");
-            _panelStateController.ResetCurrentPanelState();
-            
             var commands = ((ItemSlotController)_currentSlot).Model.Item.Execute();
             GameData.GetInstance().Battle.Turn(commands);
+            _panelStateController.ResetCurrentPanelState();
         }
 
         public override void OnCancel()

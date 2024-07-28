@@ -15,15 +15,8 @@ namespace Game
         protected Dictionary<Vector2, BaseSlotController> _slots = new Dictionary<Vector2, BaseSlotController>();
         protected Vector2 _currentIndex;
         protected UIPanelStateController _panelStateController;
-
-        protected BaseSlotController _currentSlot
-        {
-            get
-            {
-                _slots.TryGetValue(_currentIndex, out var controller);
-                return controller ? controller : _slots[Vector2.zero];
-            }
-        }
+        
+        protected BaseSlotController _currentSlot => _slots[_currentIndex];
 
         private void Awake()
         {
@@ -69,6 +62,21 @@ namespace Game
 
         public abstract void OnSubmit();
         public abstract void OnCancel();
-        public abstract void OnSlotIndexChanged(Vector2 direction);
+
+        public virtual void OnSlotIndexChanged(Vector2 direction)
+        {
+            var newIndex = _currentIndex + direction;
+            
+            if (_slots.TryGetValue(newIndex, out var controller))
+            {
+                if (controller != null)
+                {
+                    controller.SetSelected(true);
+                    var oldVM = _slots[_currentIndex];
+                    oldVM.SetSelected(false);
+                    _currentIndex = newIndex;
+                }
+            }
+        }
     }
 }

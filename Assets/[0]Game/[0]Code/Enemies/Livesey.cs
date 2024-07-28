@@ -77,6 +77,11 @@ namespace Game
             gameObject.SetActive(false);
         }
 
+        public override AttackBase GetAttack()
+        {
+            return _attackPrefabs[0];
+        }
+
         public class JokeAct : Act
         {
             public JokeAct()

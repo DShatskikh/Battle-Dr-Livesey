@@ -2,7 +2,7 @@
 
 namespace Game
 {
-    public class StartCharacterTurn : Command
+    public class StartCharacterTurnCommand : Command
     {
         public override void Execute(UnityAction onCompleted)
         {

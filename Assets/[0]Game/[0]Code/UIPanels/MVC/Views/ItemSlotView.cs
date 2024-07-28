@@ -19,7 +19,7 @@ namespace Game
             if (model.IsSelected)
             {
                 _icon.gameObject.SetActive(true);
-                _icon.sprite = GameData.GetInstance().Battle.GetHeartSprite();
+                _icon.sprite = GameData.GetInstance().AssetProvider.GetHeartSprite(GameData.GetInstance().Battle.HeartType);
             }
             else
             {

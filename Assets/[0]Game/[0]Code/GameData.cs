@@ -13,5 +13,6 @@ namespace Game
         public UIPanelStateController UIPanelStateController;
         public Battle Battle;
         public MonoBehaviour CoroutineRunner;
+        public Shop Shop;
     }
 }

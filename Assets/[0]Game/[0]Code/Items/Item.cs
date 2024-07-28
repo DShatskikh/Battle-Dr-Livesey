@@ -8,6 +8,7 @@ namespace Game
     {
         public string Name = "Добавь название";
         public string Description = "Добавь описание";
+        public int Price;
 
         public virtual List<Command> Execute()
         {

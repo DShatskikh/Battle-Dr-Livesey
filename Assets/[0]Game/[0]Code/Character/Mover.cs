@@ -20,7 +20,7 @@ namespace Game
         public void Move()
         {
             _model.UpgradeSpeed((_previousPosition - (Vector2)_rigidbody.transform.position).magnitude);
-            _rigidbody.velocity = _model.Direction * _normalSpeed;
+            _rigidbody.linearVelocity = _model.Direction * _normalSpeed;
         }
         
         public void TryStopMove()
@@ -28,7 +28,7 @@ namespace Game
             if (!_model.IsMove)
                 return;
             
-            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.linearVelocity = Vector2.zero;
             _model.UpgradeSpeed(0);
         }
     }

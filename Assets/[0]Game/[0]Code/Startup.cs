@@ -24,6 +24,9 @@ namespace Game
         [SerializeField]
         private Battle _battle;
         
+        [SerializeField]
+        private Shop _shop;
+        
         private void Awake()
         {
             GameData.GetInstance().CommandManager = new CommandManager();
@@ -34,6 +37,7 @@ namespace Game
             GameData.GetInstance().UIPanelStateController = _uiPanelStateController;
             GameData.GetInstance().Battle = _battle;
             GameData.GetInstance().CoroutineRunner = this;
+            GameData.GetInstance().Shop = _shop;
         }
 
         private void Start()

@@ -30,7 +30,7 @@ namespace Game
                 _label.color = Color.yellow;
                 _frame.color = Color.yellow;
                 _icon.color = Color.white;
-                _icon.sprite = GameData.GetInstance().Battle.GetHeartSprite();
+                _icon.sprite = GameData.GetInstance().AssetProvider.GetHeartSprite(GameData.GetInstance().Battle.HeartType);
             }
             else
             {

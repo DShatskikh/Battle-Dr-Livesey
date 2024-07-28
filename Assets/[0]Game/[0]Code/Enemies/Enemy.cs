@@ -7,6 +7,9 @@ namespace Game
 {
     public abstract class Enemy : MonoBehaviour
     {
+        [SerializeField]
+        protected List<AttackBase> _attackPrefabs;
+
         public string Name;
         public int MaxHealth;
         public int Health;
@@ -26,6 +29,7 @@ namespace Game
         public abstract Act[] GetActs();
         public abstract bool TryComment();
         public abstract void Dead();
+        public abstract AttackBase GetAttack();
 
         private void Awake()
         {

@@ -38,5 +38,10 @@ namespace Game
         {
             throw new System.NotImplementedException();
         }
+
+        public override AttackBase GetAttack()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

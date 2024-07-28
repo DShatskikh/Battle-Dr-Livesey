@@ -44,21 +44,5 @@ namespace Game
         {
             _panelStateController.SetPanelState<MainUIPanelState>();
         }
-
-        public override void OnSlotIndexChanged(Vector2 direction)
-        {
-            var newIndex = _currentIndex + direction;
-            
-            if (_slots.TryGetValue(newIndex, out var controller))
-            {
-                if (controller != null)
-                {
-                    controller.SetSelected(true);
-                    var oldVM = _slots[_currentIndex];
-                    oldVM.SetSelected(false);
-                    _currentIndex = newIndex;
-                }
-            }
-        }
     }
 }

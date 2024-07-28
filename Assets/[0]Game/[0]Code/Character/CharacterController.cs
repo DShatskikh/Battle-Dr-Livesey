@@ -34,7 +34,7 @@ namespace Game
         {
             GameData.GetInstance().Character.GetComponent<BoxCollider2D>().enabled = false;
             Model.Speed = 0;
-            _rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.linearVelocity = Vector2.zero;
         }
 
         private void Update()

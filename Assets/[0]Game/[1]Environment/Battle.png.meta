@@ -146,6 +146,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Battle_2
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 15
+        width: 49
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82b4abf3726119841a5dec4b8aada9cf
+      internalID: 704178930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -162,6 +184,7 @@ TextureImporter:
     nameFileIdTable:
       Battle_0: 3867594838521495272
       Battle_1: -407684255183689988
+      Battle_2: 704178930
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

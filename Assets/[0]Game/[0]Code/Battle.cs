@@ -10,33 +10,25 @@ namespace Game
     {
         [SerializeField]
         private TMP_Text _label;
-        
+
         public Transform CharacterPoint;
         public Transform[] EnemyPoints;
         public TypingText TextMessage;
         public MessageBox MenuMessageBox;
         public GameObject Canvas;
-        public HeartType HeartType = HeartType.Red;
-        public Enemy[] Enemies;
-        public List<Enemy> AliveEnemies;
-        public Enemy SelectedEnemy;
+        public HeartType HeartType => HeartController.Model.HeartType;
+        public Arena Arena;
+        public HeartController HeartController;
+        public Enemy[] Enemies { get; set; }
+        public List<Enemy> AliveEnemies { get; set; }
+        public Enemy SelectedEnemy { get; set; }
         public List<MoveBattleData> MoveBattleData { get; set; }
         public bool IsAllyDiedTurn { get; set; }
 
         private void Awake()
         {
             TextMessage = new TypingText(_label);
-        }
-        
-        public Sprite GetHeartSprite()
-        {
-            foreach (var pair in GameData.GetInstance().AssetProvider.PairHeartSprites)
-            {
-                if (pair.HeartType == HeartType)
-                    return pair.Sprite;
-            }
-
-            throw new Exception("Нет обьекта в списке");
+            HeartController.SetModel(new HeartModel());
         }
 
         public void Turn(List<Command> commands = null)
@@ -52,7 +44,7 @@ namespace Game
             {
                 commands.Add(new BattleAllEnemyMessageCommand());
                 commands.Add(new EnemyTurnCommand());
-                commands.Add(new StartCharacterTurn());
+                commands.Add(new StartCharacterTurnCommand());
             }
 
             GameData.GetInstance().CommandManager.StartCommands(commands);
